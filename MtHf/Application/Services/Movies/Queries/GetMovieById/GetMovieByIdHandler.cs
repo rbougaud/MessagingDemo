@@ -1,5 +1,4 @@
 ﻿using Application.Common.Mapping;
-using Application.Services.Customers.Queries.GetCustomerById;
 using Domain.Abstraction.Movies;
 using Domain.Common.Helper;
 using MediatR;
@@ -20,7 +19,7 @@ public class GetMovieByIdHandler : IRequestHandler<GetMovieByIdQuery, Result<Get
 
     public async Task<Result<GetMovieByIdResponse, string>> Handle(GetMovieByIdQuery request, CancellationToken cancellationToken)
     {
-        _logger.Information(nameof(GetCustomerByIdQueryHandler));
+        _logger.Information(nameof(GetMovieByIdHandler));
         var result = await _movieRepository.GetByIdAsync(request.MovieId);
         return result.IsSuccess ? new GetMovieByIdResponse(result.Value?.ToDto()!) : result.Error.Message;
     }
