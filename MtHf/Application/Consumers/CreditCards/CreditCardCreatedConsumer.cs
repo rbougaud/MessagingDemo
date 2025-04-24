@@ -8,7 +8,7 @@ using Serilog;
 
 namespace Application.Consumers.CreditCards;
 
-public class CreditCardCreatedConsumer(ILogger logger, IMediator mediator, ICustomerRepositoryReader customerRepositoryReader) : IConsumer<CreditCardCreated>
+public sealed class CreditCardCreatedConsumer(ILogger logger, IMediator mediator, ICustomerRepositoryReader customerRepositoryReader) : IConsumer<CreditCardCreated>
 {
     private readonly ILogger _logger = logger;
     private readonly IMediator _mediator = mediator;

@@ -20,7 +20,7 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, string connectionString)
     {
         services.AddDbContext<WriterContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly("Infrastructure")));
-        services.AddDbContext<ReaderContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly("Infrastructure")));
+        services.AddDbContext<ReaderContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly("Infrastructure")).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
         //Le storage permet de retrouver les flux en cas de rupture brutale du déroulement de l'application
         services.AddHangfire(config => config.UseSqlServerStorage(connectionString));
         services.AddHangfireServer();
