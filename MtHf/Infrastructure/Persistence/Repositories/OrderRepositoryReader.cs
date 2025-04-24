@@ -44,17 +44,18 @@ public class OrderRepositoryReader(ILogger logger, ReaderContext context) : IOrd
     public async Task<List<OrderProjection>> GetReqPendingOrders()
     {
         _logger.Information(nameof(GetReqPendingOrders));
-        const string sql = @"
-        SELECT
-            o.Id as OrderId, o.DateOrder, o.DueDate, o.DatePayment, o.DeliveryMode, o.DeliveryDate, o.State, o.CustomerId,
-            c.Id, c.FirstName, c.LastName, c.Mail, c.Address, c.Phone, c.Iban,
-            cc.Id AS CreditCardId, cc.HolderName, cc.CardType, cc.CardNumber, cc.ExpiryDate, cc.MvcCode, cc.CustomerId AS CCCustomerId,
-            la.Id AS LoyaltyAccountId, la.Points, la.CustomerId AS LACustomerId
-        FROM OrderProjection o
-        LEFT JOIN CustomerProjection c ON o.CustomerId = c.Id
-        LEFT JOIN CreditCardProjection cc ON c.Id = cc.CustomerId
-        LEFT JOIN LoyaltyAccountProjection la ON c.Id = la.CustomerId
-        WHERE o.State = 2";
+        const string sql = """
+            SELECT
+                o.Id as OrderId, o.DateOrder, o.DueDate, o.DatePayment, o.DeliveryMode, o.DeliveryDate, o.State, o.CustomerId,
+                c.Id, c.FirstName, c.LastName, c.Mail, c.Address, c.Phone, c.Iban,
+                cc.Id AS CreditCardId, cc.HolderName, cc.CardType, cc.CardNumber, cc.ExpiryDate, cc.MvcCode, cc.CustomerId AS CCCustomerId,
+                la.Id AS LoyaltyAccountId, la.Points, la.CustomerId AS LACustomerId
+            FROM OrderProjection o
+            LEFT JOIN CustomerProjection c ON o.CustomerId = c.Id
+            LEFT JOIN CreditCardProjection cc ON c.Id = cc.CustomerId
+            LEFT JOIN LoyaltyAccountProjection la ON c.Id = la.CustomerId
+            WHERE o.State = 2
+            """;
 
         try
         {
